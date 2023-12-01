@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
-import java.util.Objects;
+import java.util.Objects;  
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
