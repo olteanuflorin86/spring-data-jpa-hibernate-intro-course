@@ -30,7 +30,7 @@ public class SpringBootJpaTestSplice {
 	@Test
 	void testJpaTestSplice() {
 		long countBefore = bookRepository.count();
-		bookRepository.save(new Book("Domain Driven Design 2", "1234", "O'Reilly"));		
+		bookRepository.save(new Book("Domain Driven Design 2", "1234", "O'Reilly", null));		
 		long countAfter = bookRepository.count();
 		
 		assertThat(countBefore).isEqualTo(2);
