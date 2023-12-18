@@ -1,4 +1,5 @@
 DROP DATABASE IF EXISTS bookdb2;
+
 DROP USER IF EXISTS `bookadmin`@`%`;
 DROP USER IF EXISTS `bookuser`@`%`;
 CREATE DATABASE IF NOT EXISTS bookdb2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
