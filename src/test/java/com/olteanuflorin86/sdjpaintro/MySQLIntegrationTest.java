@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.olteanuflorin86.sdjpaintro.repositories.AuthorCompositeRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.AuthorUuidRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.BookNaturalRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.BookRepository;
@@ -16,6 +17,8 @@ import com.olteanuflorin86.sdjpaintro.repositories.BookUuidRepository;
 import com.olteanuflorin86.sdjpaintro.domain.AuthorUuid;
 import com.olteanuflorin86.sdjpaintro.domain.BookNatural;
 import com.olteanuflorin86.sdjpaintro.domain.BookUuid;
+import com.olteanuflorin86.sdjpaintro.domain.composite.AuthorComposite;
+import com.olteanuflorin86.sdjpaintro.domain.composite.NameId;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -34,6 +37,9 @@ public class MySQLIntegrationTest {
 	
 	@Autowired
 	BookNaturalRepository bookNaturalRepository;
+	
+	@Autowired
+	AuthorCompositeRepository authorCompositeRepository;
 	
 	@Test
 	void testMySQL() {
@@ -61,7 +67,6 @@ public class MySQLIntegrationTest {
         assertThat(fetched).isNotNull();
     }
 
-	
 	@Test
 	void bookNaturalTest() {
 		BookNatural bookNatural = new BookNatural();
@@ -70,5 +75,20 @@ public class MySQLIntegrationTest {
 		
 		BookNatural fetchedBookNatural = bookNaturalRepository.getById(savedBookNatural.getTitle());
 		assertThat(fetchedBookNatural).isNotNull();
+	}
+	
+	@Test
+	void authorCompositeTest() {
+		NameId nameId = new NameId("Florin", "Mylastname");
+		AuthorComposite authorComposite = new AuthorComposite();
+		authorComposite.setFirstName(nameId.getFirstName());
+		authorComposite.setLastName(nameId.getLastName());
+		authorComposite.setCountry("Mycountry");
+		
+		AuthorComposite savedAuthorComposite = authorCompositeRepository.save(authorComposite);
+		assertThat(savedAuthorComposite).isNotNull();
+	
+		AuthorComposite fetchedAuthorComposite = authorCompositeRepository.getById(nameId);
+		assertThat(fetchedAuthorComposite).isNotNull();
 	}
 }
