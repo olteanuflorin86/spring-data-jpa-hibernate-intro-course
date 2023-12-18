@@ -84,41 +84,68 @@ public class AuthorDaoImpl implements AuthorDao {
         return null;
     }
 	
-		@Override
-	    public Author saveNewAuthor(Author author) {
-	        Connection connection = null;
-	        PreparedStatement ps = null;
-	        ResultSet resultSet = null;
+	@Override
+	public Author saveNewAuthor(Author author) {
+		Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet resultSet = null;
 
-	        try {
-	            connection = dataSource.getConnection();
-	            ps = connection.prepareStatement("INSERT INTO author (first_name, last_name) values (?, ?)");
-	            ps.setString(1, author.getFirstName());
-	            ps.setString(2, author.getLastName());
-	            ps.execute();
+	    try {
+	    	connection = dataSource.getConnection();
+	        ps = connection.prepareStatement("INSERT INTO author (first_name, last_name) values (?, ?)");
+	        ps.setString(1, author.getFirstName());
+	        ps.setString(2, author.getLastName());
+	        ps.execute();
 
-	            Statement statement = connection.createStatement();
+	        Statement statement = connection.createStatement();
 
-	            resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
+	        resultSet = statement.executeQuery("SELECT LAST_INSERT_ID()");
 
-	            if (resultSet.next()) {
-	                Long savedId = resultSet.getLong(1);
-	                return this.getById(savedId);
-	            }
-
-	            statement.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        } finally {
-	            try {
-	                closeAll(connection, ps, resultSet);
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	            }
+	        if (resultSet.next()) {
+	        	Long savedId = resultSet.getLong(1);
+	            return this.getById(savedId);
 	        }
 
-	        return null;
+	        statement.close();
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    } finally {
+	    	try {
+	    		closeAll(connection, ps, resultSet);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	   }
+
+	   return null;
+	}
+		
+	@Override
+	public Author updateAuthor(Author author) {
+		Connection connection = null;
+	    PreparedStatement ps = null;
+	    ResultSet resultSet = null;
+
+	    try {
+	    	connection = dataSource.getConnection();
+	        ps = connection.prepareStatement("UPDATE author set first_name = ?, last_name = ? where author.id = ?");
+	        ps.setString(1, author.getFirstName());
+	        ps.setString(2, author.getLastName());
+	        ps.setLong(3, author.getId());
+	        ps.execute();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            closeAll(connection, ps, resultSet);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
 	    }
+
+	    return this.getById(author.getId());
+	}
 	
 
 	private Author getAuthorFromRS(ResultSet resultSet) throws SQLException {
