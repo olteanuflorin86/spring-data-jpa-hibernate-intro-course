@@ -11,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.olteanuflorin86.sdjpaintro.dao.BookDao;
 import com.olteanuflorin86.sdjpaintro.domain.Book;
+import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -42,7 +43,11 @@ public class BookDaoIntegrationTest {
         book.setIsbn("1234");
         book.setPublisher("Self");
         book.setTitle("my book");
-        book.setAuthorId(3L);
+//        book.setAuthorId(3L);
+        Author author = new Author();
+        author.setId(3L);
+
+        book.setAuthor(author);
         Book saved = bookDao.saveNewBook(book);
 
         assertThat(saved).isNotNull();
@@ -54,7 +59,11 @@ public class BookDaoIntegrationTest {
         book.setIsbn("1234");
         book.setPublisher("Self");
         book.setTitle("my book");
-        book.setAuthorId(3L);
+//        book.setAuthorId(3L);
+        Author author = new Author();
+        author.setId(3L);
+
+        book.setAuthor(author);
         Book saved = bookDao.saveNewBook(book);
 
         saved.setTitle("New Book");
@@ -71,7 +80,7 @@ public class BookDaoIntegrationTest {
         book.setIsbn("1234");
         book.setPublisher("Self");
         book.setTitle("my book");
-        book.setAuthorId(3L);
+//        book.setAuthorId(3L);
         Book saved = bookDao.saveNewBook(book);
 
         bookDao.deleteBookById(saved.getId());

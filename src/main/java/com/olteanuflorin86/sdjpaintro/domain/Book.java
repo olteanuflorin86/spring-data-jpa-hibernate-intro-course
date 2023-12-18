@@ -5,7 +5,8 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id; 
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient; 
 
 @Entity
 public class Book {
@@ -17,7 +18,11 @@ public class Book {
 	private String title;
 	private String isbn;
 	private String publisher;
-	private Long authorId;
+//	
+//	private Long authorId;
+	@Transient
+	private Author author;
+	
 	
 	public Book() {
 	}
@@ -61,12 +66,20 @@ public class Book {
 		this.publisher = publisher;
 	}
 
-	public Long getAuthorId() {
-		return authorId;
-	}
+//	public Long getAuthorId() {
+//		return authorId;
+//	}
+//	
+//	public void setAuthorId(Long authorId) {
+//		this.authorId = authorId;
+//	}
 	
-	public void setAuthorId(Long authorId) {
-		this.authorId = authorId;
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 	
 	@Override
