@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro;
 
-import static org.assertj.core.api.Assertions.assertThat; 
+import static org.assertj.core.api.Assertions.assertThat;  
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.olteanuflorin86.sdjpaintro.repositories.AuthorCompositeRepository;
+import com.olteanuflorin86.sdjpaintro.repositories.AuthorEmbeddedRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.AuthorUuidRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.BookNaturalRepository;
 import com.olteanuflorin86.sdjpaintro.repositories.BookRepository;
@@ -18,6 +19,7 @@ import com.olteanuflorin86.sdjpaintro.domain.AuthorUuid;
 import com.olteanuflorin86.sdjpaintro.domain.BookNatural;
 import com.olteanuflorin86.sdjpaintro.domain.BookUuid;
 import com.olteanuflorin86.sdjpaintro.domain.composite.AuthorComposite;
+import com.olteanuflorin86.sdjpaintro.domain.composite.AuthorEmbedded;
 import com.olteanuflorin86.sdjpaintro.domain.composite.NameId;
 
 @ActiveProfiles("local")
@@ -40,6 +42,9 @@ public class MySQLIntegrationTest {
 	
 	@Autowired
 	AuthorCompositeRepository authorCompositeRepository;
+	
+	@Autowired
+	AuthorEmbeddedRepository authorEmbeddedRepository;
 	
 	@Test
 	void testMySQL() {
@@ -91,4 +96,17 @@ public class MySQLIntegrationTest {
 		AuthorComposite fetchedAuthorComposite = authorCompositeRepository.getById(nameId);
 		assertThat(fetchedAuthorComposite).isNotNull();
 	}
+	
+	@Test
+	void authorEmbeddedTest() {
+		NameId nameId = new NameId("Florin", "Mylastname");
+		AuthorEmbedded authorEmbedded = new AuthorEmbedded(nameId);
+		
+		AuthorEmbedded savedAuthorEmbedded = authorEmbeddedRepository.save(authorEmbedded);
+		assertThat(savedAuthorEmbedded).isNotNull();
+		
+		AuthorEmbedded fetchedAuthorEmbedded = authorEmbeddedRepository.getById(nameId);
+		assertThat(fetchedAuthorEmbedded).isNotNull();
+	}
+
 }
