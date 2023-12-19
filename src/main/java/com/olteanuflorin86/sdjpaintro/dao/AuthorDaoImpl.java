@@ -1,5 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
@@ -37,4 +38,7 @@ public class AuthorDaoImpl implements AuthorDao {
 		
 	}
 
+	private RowMapper<Author> getRowMapper() {
+		return new AuthorMapper();
+	}
 }
