@@ -95,20 +95,32 @@ public class DaoIntegrationTest {
 //        assertThat(book.getId()).isNotNull();
 //    }
 
-    @Test
-    void testDeleteAuthor() {
-        Author author = new Author();
-        author.setFirstName("florin");
-        author.setLastName("f");
 
+
+    @Test
+    void testGetAuthor() {
+
+        Author author = authorDao.getById(1L);
+
+        assertThat(author).isNotNull();
+
+    }
+    
+    @Test
+    void testGetAuthorByName() {
+        Author author = authorDao.findAuthorByName("Craig", "Walls");
+
+        assertThat(author).isNotNull();
+    }
+
+    @Test
+    void testSaveAuthor() {
+        Author author = new Author();
+        author.setFirstName("Florin");
+        author.setLastName("Florin2");
         Author saved = authorDao.saveNewAuthor(author);
 
-        authorDao.deleteAuthorById(saved.getId());
-
-        assertThrows(EmptyResultDataAccessException.class, () -> {
-            Author deleted = authorDao.getById(saved.getId());
-        });
-
+        assertThat(saved).isNotNull();
     }
 
     @Test
@@ -124,30 +136,19 @@ public class DaoIntegrationTest {
 
         assertThat(updated.getLastName()).isEqualTo("Florin2");
     }
-
+    
     @Test
-    void testSaveAuthor() {
+    void testDeleteAuthor() {
         Author author = new Author();
-        author.setFirstName("Florin");
-        author.setLastName("Florin2");
+        author.setFirstName("florin");
+        author.setLastName("f");
+
         Author saved = authorDao.saveNewAuthor(author);
 
-        assertThat(saved).isNotNull();
-    }
+        authorDao.deleteAuthorById(saved.getId());
 
-    @Test
-    void testGetAuthorByName() {
-        Author author = authorDao.findAuthorByName("Craig", "Walls");
-
-        assertThat(author).isNotNull();
-    }
-
-    @Test
-    void testGetAuthor() {
-
-        Author author = authorDao.getById(1L);
-
-        assertThat(author).isNotNull();
-
+        assertThrows(EmptyResultDataAccessException.class, () -> {
+            Author deleted = authorDao.getById(saved.getId());
+        });
     }
 }
