@@ -1,11 +1,12 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component; 
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
@@ -23,7 +24,11 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public Author findAuthorByName(String firstName, String lastName) {
-        return null;
+    	TypedQuery<Author> query = getEntityManager().createQuery("SELECT a FROM Author a " + "WHERE a.firstName = :first_name and a.lastName = :last_name", Author.class);
+        query.setParameter("first_name", firstName);
+        query.setParameter("last_name", lastName);
+        
+    	return query.getSingleResult();
     }
 
     @Override
