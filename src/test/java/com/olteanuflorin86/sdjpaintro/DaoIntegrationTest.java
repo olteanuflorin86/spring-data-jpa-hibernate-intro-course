@@ -1,6 +1,7 @@
 package com.olteanuflorin86.sdjpaintro;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -8,17 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.dao.TransientDataAccessResourceException;
 
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDao;
 import com.olteanuflorin86.sdjpaintro.dao.BookDao;
+import com.olteanuflorin86.sdjpaintro.dao.AuthorDaoImpl;
+import com.olteanuflorin86.sdjpaintro.dao.BookDaoImpl;
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 import com.olteanuflorin86.sdjpaintro.domain.Book;
 
 @ActiveProfiles("local")
 @DataJpaTest
 @ComponentScan(basePackages = {"com.olteanuflorin86.sdjpaintro.dao"})
+//@Import({AuthorDaoImpl.class, BookDaoImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class DaoIntegrationTest {
 
@@ -46,9 +52,11 @@ public class DaoIntegrationTest {
     void testInsertAuthor() {
         Author author = new Author();
         author.setFirstName("florin");
-        author.setLastName("f");
+        author.setLastName("f1");
 
         Author saved = authorDao.saveNewAuthor(author);
+        
+        System.out.println("New Id is: " + saved.getId());
 
         assertThat(saved).isNotNull();
     }
@@ -80,7 +88,7 @@ public class DaoIntegrationTest {
 //        Author deleted = authorDao.getById(saved.getId());
 //
 //        assertThat(deleted).isNull();
-        assertThrows(EmptyResultDataAccessException.class, () -> {
+        assertThrows(TransientDataAccessResourceException.class, () -> {
             authorDao.getById(saved.getId());
         });
     }
