@@ -24,7 +24,6 @@ public class DaoIntegrationTest {
     @Test
     void testGetAuthor() {
         Author author = authorDao.getById(1L);
-        System.out.println(author);
 
         assertThat(author.getId()).isNotNull();
     }
