@@ -12,7 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDao;
+import com.olteanuflorin86.sdjpaintro.dao.BookDao;
 import com.olteanuflorin86.sdjpaintro.domain.Author;
+import com.olteanuflorin86.sdjpaintro.domain.Book;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -22,6 +24,9 @@ public class DaoIntegrationTest {
 
     @Autowired
     AuthorDao authorDao;
+    
+    @Autowired
+    BookDao bookDao;
     
     @Test
     void testGetAuthor() {
@@ -77,6 +82,66 @@ public class DaoIntegrationTest {
 //        assertThat(deleted).isNull();
         assertThrows(EmptyResultDataAccessException.class, () -> {
             authorDao.getById(saved.getId());
+        });
+    }
+    
+    
+    @Test
+    void testGetBook() {
+        Book book = bookDao.getById(3L);
+
+        assertThat(book.getId()).isNotNull();
+    }
+    
+    @Test
+    void testGetBookByName() {
+        Book book = bookDao.findBookByTitle("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
+    
+    @Test
+    void testSaveBook() {
+        Book book = new Book();
+        book.setIsbn("1234");
+        book.setPublisher("Self");
+        book.setTitle("my book");
+        book.setAuthorId(1L);
+
+        Book saved = bookDao.saveNewBook(book);
+
+        assertThat(saved).isNotNull();
+    }
+    
+    @Test
+    void updateBookTest() {
+        Book book = new Book();
+        book.setIsbn("1234");
+        book.setPublisher("Self");
+        book.setTitle("my book");
+        book.setAuthorId(1L);
+        Book saved = bookDao.saveNewBook(book);
+
+        saved.setTitle("New Book");
+        bookDao.updateBook(saved);
+
+        Book fetched = bookDao.getById(saved.getId());
+
+        assertThat(fetched.getTitle()).isEqualTo("New Book");
+    }
+    
+    @Test
+    void testDeleteBook() {
+        Book book = new Book();
+        book.setIsbn("1234");
+        book.setPublisher("Self");
+        book.setTitle("my book");
+        Book saved = bookDao.saveNewBook(book);
+
+        bookDao.deleteBookById(saved.getId());
+
+        assertThrows(EmptyResultDataAccessException.class, () -> {
+            bookDao.getById(saved.getId());
         });
     }
 
