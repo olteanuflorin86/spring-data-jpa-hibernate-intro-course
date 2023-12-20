@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
-import java.sql.ResultSet;
+import java.sql.ResultSet; 
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +16,7 @@ public class AuthorMapper implements RowMapper<Author> {
 		author.setFirstName(rs.getString("first_name"));
 		author.setLastName(rs.getString("last_name"));
 		
-		return null;
+		return author;
 	}
 
 }
