@@ -66,7 +66,12 @@ public class AuthorDaoImpl implements AuthorDao {
 //        
 //    	return query.getSingleResult();
         EntityManager em = getEntityManager();
-        TypedQuery<Author> query = em.createQuery("SELECT a FROM Author a " + "WHERE a.firstName = :first_name and a.lastName = :last_name", Author.class);
+        
+//      // One way of doing things
+//      TypedQuery<Author> query = em.createQuery("SELECT a FROM Author a " + "WHERE a.firstName = :first_name and a.lastName = :last_name", Author.class);
+        // Second way of doing things - with NamedQuery
+        TypedQuery<Author> query = em.createNamedQuery("find_by_name", Author.class);
+        
         query.setParameter("first_name", firstName);
         query.setParameter("last_name", lastName);
 
