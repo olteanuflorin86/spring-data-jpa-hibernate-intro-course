@@ -6,6 +6,8 @@ import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 public interface AuthorDao {
 	
+	List<Author> findAll();
+	
 	List<Author> listAuthorByLastNameLike(String lastName);
 	
     Author getById(Long id);
