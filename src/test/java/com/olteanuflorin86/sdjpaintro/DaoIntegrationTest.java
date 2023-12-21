@@ -16,6 +16,9 @@ import java.util.List;
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 import com.olteanuflorin86.sdjpaintro.domain.Book;
+
+import net.bytebuddy.utility.RandomString;
+
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDao;
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDaoImpl;
 import com.olteanuflorin86.sdjpaintro.dao.BookDao;
@@ -33,6 +36,20 @@ public class DaoIntegrationTest {
     @Autowired
     BookDao bookDao;
 
+    @Test
+	void testFindByISBN() {
+    	Book book = new Book();
+    	book.setIsbn("1234" + RandomString.make());
+    	book.setTitle("ISBN TEST");
+    	
+    	Book savedBook = bookDao.saveNewBook(book);
+    	
+    	Book fetchedBook = bookDao.findByISBN(savedBook.getIsbn());
+    	
+    	assertThat(book).isNotNull(); 
+    	assertThat(fetchedBook).isNotNull();
+	}
+    
     @Test
     void testGetBook() {
     	Book book = bookDao.getById(3L);
