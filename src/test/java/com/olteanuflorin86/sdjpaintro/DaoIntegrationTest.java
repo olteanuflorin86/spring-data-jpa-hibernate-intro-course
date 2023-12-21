@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat; 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 import com.olteanuflorin86.sdjpaintro.domain.Book;
@@ -100,6 +102,14 @@ public class DaoIntegrationTest {
     }
 
 
+    
+    @Test
+    void testListAuthorByLastNameLike() {
+    	List<Author> authors = authorDao.listAuthorByLastNameLike("Wall");
+    	
+    	assertThat(authors).isNotNull();
+    	assertThat(authors.size()).isGreaterThan(0);
+    }
 
     @Test
     void testGetAuthor() {

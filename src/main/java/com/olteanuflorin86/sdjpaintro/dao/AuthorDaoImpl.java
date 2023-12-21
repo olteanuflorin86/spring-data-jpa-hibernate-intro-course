@@ -1,11 +1,15 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.sql.SQLException; 
+import java.util.List;
+
 import org.springframework.stereotype.Component; 
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 @Component
@@ -15,6 +19,21 @@ public class AuthorDaoImpl implements AuthorDao {
 	
 	public AuthorDaoImpl(EntityManagerFactory emf) {
 		this.emf = emf;
+	}
+	
+	@Override
+	public List<Author> listAuthorByLastNameLike(String lastName) {
+		EntityManager em = getEntityManager();
+		
+		try {
+			Query query = em.createQuery("SELECT a FROM Author a WHERE a.lastName LIKE :last_name"); 
+			query.setParameter("last_name", lastName + "%");
+			List<Author> authors = query.getResultList();
+			
+			return authors;
+		} finally {
+			em.close();
+		}
 	}
 	
     @Override

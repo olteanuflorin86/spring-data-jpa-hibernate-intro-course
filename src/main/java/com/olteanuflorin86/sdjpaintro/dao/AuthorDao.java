@@ -1,8 +1,12 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 public interface AuthorDao {
+	
+	List<Author> listAuthorByLastNameLike(String lastName);
 	
     Author getById(Long id);
 
