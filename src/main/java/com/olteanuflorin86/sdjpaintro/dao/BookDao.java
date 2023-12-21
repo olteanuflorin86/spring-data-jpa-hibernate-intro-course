@@ -20,4 +20,5 @@ public interface BookDao {
     
     List<Book> findAll();
 
+    Book findBookByTitleCriteria(String clean_code);
 }

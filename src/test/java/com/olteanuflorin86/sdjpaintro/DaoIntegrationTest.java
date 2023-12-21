@@ -142,6 +142,13 @@ public class DaoIntegrationTest {
 
         bookDao.deleteBookById(saved.getId());
     }
+    
+    @Test
+    void testGetBookByTitleCriteria() {
+        Book book = bookDao.findBookByTitleCriteria("Clean Code");
+
+        assertThat(book).isNotNull();
+    }
 
 
     
