@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
-import java.util.Objects;
+import java.util.Objects; 
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +10,13 @@ import jakarta.persistence.Id;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedQueries;
 
+@NamedQueries({
+    @NamedQuery(name = "find_all_books", query = "FROM Book"),
+    @NamedQuery(name = "find_by_title", query = "FROM Book b where b.title = :title")
+})
 @Entity
 public class Book {
 

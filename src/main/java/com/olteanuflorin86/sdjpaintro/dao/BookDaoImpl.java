@@ -1,5 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.olteanuflorin86.sdjpaintro.domain.Book;
@@ -42,14 +44,28 @@ public class BookDaoImpl implements BookDao {
         return book;
     }
 
+//    @Override
+//    public Book findBookByTitle(String title) {
+//        EntityManager em = getEntityManager();
+//        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
+//        query.setParameter("title", title);
+//        Book book = query.getSingleResult();
+//        em.close();
+//        return book;
+//    }
     @Override
     public Book findBookByTitle(String title) {
         EntityManager em = getEntityManager();
-        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b where b.title = :title", Book.class);
-        query.setParameter("title", title);
-        Book book = query.getSingleResult();
-        em.close();
-        return book;
+
+        try{
+            TypedQuery<Book> query = em.createNamedQuery("find_by_title", Book.class);
+            query.setParameter("title", title);
+            Book book = query.getSingleResult();
+            
+            return book;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -86,6 +102,19 @@ public class BookDaoImpl implements BookDao {
         em.close();
     }
 
+    @Override
+    public List<Book> findAll() {
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Book> query = em.createNamedQuery("find_all_books", Book.class);
+
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
     private EntityManager getEntityManager(){
         return emf.createEntityManager();
     }
