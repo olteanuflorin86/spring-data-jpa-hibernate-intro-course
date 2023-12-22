@@ -15,12 +15,13 @@ import jakarta.persistence.Id;
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String title;
 	private String isbn;
 	private String publisher;
+	private Long authorId;
 	
 	public Book() {
 	}
@@ -32,13 +33,13 @@ public class Book {
 		this.publisher = publisher;
 	}
 	
-	public Book(Long id, String title, String isbn, String publisher) {
-//		super();
-		this.id = id;
-		this.title = title;
-		this.isbn = isbn;
-		this.publisher = publisher;
-	}
+//	public Book(Long id, String title, String isbn, String publisher) {
+////		super();
+//		this.id = id;
+//		this.title = title;
+//		this.isbn = isbn;
+//		this.publisher = publisher;
+//	}
 
 	public Long getId() {
 		return id;
@@ -71,6 +72,14 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
+	
+	public Long getAuthorId() {
+		return authorId;
+	}
+	
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
+	}
 
 	@Override
 	public int hashCode() {
@@ -88,7 +97,5 @@ public class Book {
 		Book other = (Book) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 	
 }
