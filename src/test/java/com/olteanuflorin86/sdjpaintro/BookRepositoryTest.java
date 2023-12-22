@@ -81,4 +81,11 @@ public class BookRepositoryTest {
      
         assertThat(book).isNotNull();
     }
+    
+    @Test
+    void testBookQueryNative() {
+        Book book = bookRepository.findBookByTitleNativeQuery("Clean Code");
+     
+        assertThat(book).isNotNull();
+    }
 }
