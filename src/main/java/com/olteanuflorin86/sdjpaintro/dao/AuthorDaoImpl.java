@@ -23,8 +23,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
 	@Override
 	public Author findAuthorByName(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return null;
+		return authorRepository.findAuthorByFirstNameAndLastName(firstName, lastName);
 	}
 
 	@Override

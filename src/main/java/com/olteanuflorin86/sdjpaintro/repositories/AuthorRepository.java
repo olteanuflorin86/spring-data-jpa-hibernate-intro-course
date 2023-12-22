@@ -6,4 +6,5 @@ import com.olteanuflorin86.sdjpaintro.domain.Author;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
+	Author findAuthorByFirstNameAndLastName(String firstName, String lastName);
 }
