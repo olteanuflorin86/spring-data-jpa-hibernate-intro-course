@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.olteanuflorin86.sdjpaintro.domain.Book;
 
@@ -28,4 +29,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	@Query("SELECT b FROM Book b WHERE b.title = ?1")
 	Book findBookByTitleWithQuery(String title);
+	
+    @Query("SELECT b FROM Book b where b.title = :title")
+    Book findBookByTitleWithQueryNamed(@Param("title") String title);
 }
