@@ -3,14 +3,22 @@ package com.olteanuflorin86.sdjpaintro.dao;
 import org.springframework.stereotype.Component;
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
+import com.olteanuflorin86.sdjpaintro.repositories.AuthorRepository;
+
+import jakarta.transaction.Transactional;
 
 @Component
 public class AuthorDaoImpl implements AuthorDao {
-
+	
+	private final AuthorRepository authorRepository;
+	
+	public AuthorDaoImpl(AuthorRepository authorRepository) {
+		this.authorRepository = authorRepository;
+	}
+ 
 	@Override
 	public Author getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return authorRepository.getById(id);
 	}
 
 	@Override
@@ -21,20 +29,21 @@ public class AuthorDaoImpl implements AuthorDao {
 
 	@Override
 	public Author saveNewAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return null;
+		return authorRepository.save(author);
 	}
 
+	@Transactional
 	@Override
 	public Author updateAuthor(Author author) {
-		// TODO Auto-generated method stub
-		return null;
+		Author foundAuthor = authorRepository.getById(author.getId());
+		foundAuthor.setFirstName(author.getFirstName());
+		foundAuthor.setLastName(author.getLastName());
+		return authorRepository.save(foundAuthor);
 	}
 
 	@Override
 	public void deleteAuthorById(Long id) {
-		// TODO Auto-generated method stub
-		
+		authorRepository.deleteById(id);		
 	}
 
 }

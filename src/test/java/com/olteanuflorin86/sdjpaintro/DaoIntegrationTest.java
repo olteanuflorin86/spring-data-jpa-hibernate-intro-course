@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat; 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.dao.EmptyResultDataAccessException;
+//import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDao;
@@ -27,12 +28,6 @@ public class DaoIntegrationTest {
 
 //    @Autowired
 //    BookDao bookDao;
-//
-//
-//
-//
-//
-//
 //
 //  @Test
 //  void testGetBook() {
@@ -151,7 +146,8 @@ public class DaoIntegrationTest {
 
         authorDao.deleteAuthorById(saved.getId());
 
-        assertThrows(EmptyResultDataAccessException.class, () -> {
+//        assertThrows(EmptyResultDataAccessException.class, () -> {
+       	assertThrows(JpaObjectRetrievalFailureException.class, () -> {
             Author deleted = authorDao.getById(saved.getId());
         });
 
