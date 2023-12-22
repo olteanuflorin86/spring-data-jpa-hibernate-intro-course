@@ -1,6 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.repositories;
 
 import java.util.Optional;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.olteanuflorin86.sdjpaintro.domain.Book;
 
 import org.springframework.lang.Nullable;
+import org.springframework.scheduling.annotation.Async;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
@@ -19,5 +21,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Book getByTitle(@Nullable String title);
 	
 	Stream<Book> findAllByTitleNotNull();
+	
+	@Async
+	Future<Book> queryByTitle(String title);
 
 }
