@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
+import jakarta.persistence.NamedQuery;
 
+@NamedQuery(name = "Book.jpaNamed", query = "FROM Book b where b.title = :title")
 @Entity
 public class Book {
 
