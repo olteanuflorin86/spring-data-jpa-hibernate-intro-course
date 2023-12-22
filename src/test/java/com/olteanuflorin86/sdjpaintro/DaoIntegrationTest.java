@@ -13,6 +13,8 @@ import org.springframework.test.context.ActiveProfiles;
 //import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import com.olteanuflorin86.sdjpaintro.domain.Author;
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDao;
 import com.olteanuflorin86.sdjpaintro.dao.AuthorDaoImpl;
@@ -110,6 +112,13 @@ public class DaoIntegrationTest {
         Author author = authorDao.findAuthorByName("Craig", "Walls");
 
         assertThat(author).isNotNull();
+    }
+    
+    @Test
+    void testGetAuthorByNameNotFound() {
+        assertThrows(EntityNotFoundException.class, () -> {
+            Author author = authorDao.findAuthorByName("foo", "bar");
+        });
     }
     
     @Test
