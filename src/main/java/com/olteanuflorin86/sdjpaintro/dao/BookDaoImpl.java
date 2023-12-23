@@ -56,4 +56,10 @@ public class BookDaoImpl implements BookDao {
 		return null;
 	}
 
+	@Override
+	public List<Book> findAllBooks(int pageSize, int offset) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
