@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.olteanuflorin86.sdjpaintro.dao.BookDao;
 import com.olteanuflorin86.sdjpaintro.dao.BookDaoJDBCTemplate;
@@ -150,5 +151,14 @@ public class BookDaoJDBCTemplateTest {
 
         assertThat(books).isNotNull();
         assertThat(books.size()).isEqualTo(0);
+    }
+    
+    @Test
+    void findAllBooksPage1_SortByTitle() {
+        List<Book> books = bookDao.findAllBooksSortByTitle(PageRequest.of(0, 10,
+                Sort.by(Sort.Order.desc("title"))));
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isEqualTo(10);
     }
 }
