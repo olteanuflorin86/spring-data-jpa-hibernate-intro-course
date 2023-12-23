@@ -1,5 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.olteanuflorin86.sdjpaintro.domain.Book;
@@ -44,6 +46,11 @@ public class BookDaoJDBCTemplate implements BookDao {
 	public void deleteBookById(Long id) {
 		jdbcTemplate.update("DELETE from book where id = ?", id);
 		
+	}
+	
+	@Override
+	public List<Book> findAllBooks() {
+		return jdbcTemplate.query("SELECT * FROM book", getBookMapper());
 	}
 	
     private BookMapper getBookMapper(){

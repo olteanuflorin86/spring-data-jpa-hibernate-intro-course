@@ -1,5 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
 import com.olteanuflorin86.sdjpaintro.domain.Book;
 
 public interface BookDao {
@@ -13,5 +15,7 @@ public interface BookDao {
     Book updateBook(Book book);
 
     void deleteBookById(Long id);
+    
+    List<Book> findAllBooks();
     
 }

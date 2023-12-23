@@ -1,5 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.olteanuflorin86.sdjpaintro.domain.Book;
@@ -46,6 +48,12 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public void deleteBookById(Long id) {
 		bookRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Book> findAllBooks() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

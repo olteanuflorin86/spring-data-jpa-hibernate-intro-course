@@ -3,6 +3,8 @@ package com.olteanuflorin86.sdjpaintro;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +93,13 @@ public class BookDaoJDBCTemplateTest {
         assertThrows(EmptyResultDataAccessException.class, () -> {
             bookDao.getById(saved.getId());
         });
+    }
+    
+    @Test
+    void testFindAllBooks() {
+    	List<Book> books = bookDao.findAllBooks();
+    	
+    	assertThat(books).isNotNull();
+    	assertThat(books.size()).isGreaterThan(5);
     }
 }
