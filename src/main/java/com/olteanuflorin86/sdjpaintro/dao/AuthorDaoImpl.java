@@ -1,5 +1,8 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component; 
 
 import com.olteanuflorin86.sdjpaintro.domain.Author;
@@ -44,6 +47,12 @@ public class AuthorDaoImpl implements AuthorDao {
 	@Override
 	public void deleteAuthorById(Long id) {
 		authorRepository.deleteById(id);		
+	}
+
+	@Override
+	public List<Author> findAllAuthorsByLastName(String lastname, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
