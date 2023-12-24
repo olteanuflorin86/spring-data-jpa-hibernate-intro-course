@@ -94,14 +94,30 @@ public class BookDaoHibernate implements BookDao {
 
 	@Override
 	public List<Book> findAllBooks(int pageSize, int offset) {
-		// TODO Auto-generated method stub
-		return null;
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b", Book.class);
+            query.setFirstResult(offset);
+            query.setMaxResults(pageSize);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
 	}
 
 	@Override
 	public List<Book> findAllBooks(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+        EntityManager em = getEntityManager();
+
+        try {
+            TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b", Book.class);
+            query.setFirstResult(Math.toIntExact(pageable.getOffset()));
+            query.setMaxResults(pageable.getPageSize());
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
 	}
 
 	@Override
