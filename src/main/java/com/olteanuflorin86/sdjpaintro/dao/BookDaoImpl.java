@@ -2,6 +2,7 @@ package com.olteanuflorin86.sdjpaintro.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -77,8 +78,9 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public List<Book> findAllBooksSortByTitle(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+
+        return bookPage.getContent();
 	}
 
 }
