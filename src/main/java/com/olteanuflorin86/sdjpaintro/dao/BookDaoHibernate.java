@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.dao;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.data.domain.Pageable;
 
