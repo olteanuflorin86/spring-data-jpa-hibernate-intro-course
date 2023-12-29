@@ -4,6 +4,8 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 //import jakarta.persistence.GeneratedValue;
 //import jakarta.persistence.GenerationType;
 //import jakarta.persistence.Id;
@@ -59,7 +61,10 @@ public class OrderHeader extends BaseEntity {
 //		this.id = id;
 //	}
 	
+	@Embedded
 	private Address shippingAddress;
+	
+	@Embedded
     private Address billToAddress;
 
 	public String getCustomer() {
