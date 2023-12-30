@@ -1,10 +1,13 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
+import java.util.Set;
+
 import jakarta.persistence.AttributeOverride; 
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 //import jakarta.persistence.GeneratedValue;
@@ -70,6 +73,9 @@ public class OrderHeader extends BaseEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
+	
+	@OneToMany(mappedBy = "orderHeader")
+	private Set<OrderLine> orderLines;
 
 	public String getCustomer() {
 		return customer;
@@ -102,24 +108,50 @@ public class OrderHeader extends BaseEntity {
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
+    
+    public Set<OrderLine> getOrderLines() {
+        return orderLines;
+    }
 
+    public void setOrderLines(Set<OrderLine> orderLines) {
+        this.orderLines = orderLines;
+    }
+
+////////    @Override
+////////    public boolean equals(Object o) {
+////////        if (this == o) return true;
+////////        if (o == null || getClass() != o.getClass()) return false;
+////////
+////////        OrderHeader that = (OrderHeader) o;
+////////
+////////        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+////////        return customer != null ? customer.equals(that.customer) : that.customer == null;
+////////    }
+////////
+////////    @Override
+////////    public int hashCode() {
+////////        int result = id != null ? id.hashCode() : 0;
+////////        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+////////        return result;
+////////    }	
+//////
 //////    @Override
 //////    public boolean equals(Object o) {
 //////        if (this == o) return true;
-//////        if (o == null || getClass() != o.getClass()) return false;
+//////        if (!(o instanceof OrderHeader)) return false;
+//////        if (!super.equals(o)) return false;
 //////
 //////        OrderHeader that = (OrderHeader) o;
 //////
-//////        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-//////        return customer != null ? customer.equals(that.customer) : that.customer == null;
+//////        return getCustomer() != null ? getCustomer().equals(that.getCustomer()) : that.getCustomer() == null;
 //////    }
 //////
 //////    @Override
 //////    public int hashCode() {
-//////        int result = id != null ? id.hashCode() : 0;
-//////        result = 31 * result + (customer != null ? customer.hashCode() : 0);
+//////        int result = super.hashCode();
+//////        result = 31 * result + (getCustomer() != null ? getCustomer().hashCode() : 0);
 //////        return result;
-//////    }	
+//////    }
 ////
 ////    @Override
 ////    public boolean equals(Object o) {
@@ -129,13 +161,19 @@ public class OrderHeader extends BaseEntity {
 ////
 ////        OrderHeader that = (OrderHeader) o;
 ////
-////        return getCustomer() != null ? getCustomer().equals(that.getCustomer()) : that.getCustomer() == null;
+////        if (getCustomer() != null ? !getCustomer().equals(that.getCustomer()) : that.getCustomer() != null)
+////            return false;
+////        if (shippingAddress != null ? !shippingAddress.equals(that.shippingAddress) : that.shippingAddress != null)
+////            return false;
+////        return billToAddress != null ? billToAddress.equals(that.billToAddress) : that.billToAddress == null;
 ////    }
 ////
 ////    @Override
 ////    public int hashCode() {
 ////        int result = super.hashCode();
 ////        result = 31 * result + (getCustomer() != null ? getCustomer().hashCode() : 0);
+////        result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
+////        result = 31 * result + (billToAddress != null ? billToAddress.hashCode() : 0);
 ////        return result;
 ////    }
 //
@@ -149,17 +187,20 @@ public class OrderHeader extends BaseEntity {
 //
 //        if (getCustomer() != null ? !getCustomer().equals(that.getCustomer()) : that.getCustomer() != null)
 //            return false;
-//        if (shippingAddress != null ? !shippingAddress.equals(that.shippingAddress) : that.shippingAddress != null)
+//        if (getShippingAddress() != null ? !getShippingAddress().equals(that.getShippingAddress()) : that.getShippingAddress() != null)
 //            return false;
-//        return billToAddress != null ? billToAddress.equals(that.billToAddress) : that.billToAddress == null;
+//        if (getBillToAddress() != null ? !getBillToAddress().equals(that.getBillToAddress()) : that.getBillToAddress() != null)
+//            return false;
+//        return getOrderStatus() == that.getOrderStatus();
 //    }
 //
 //    @Override
 //    public int hashCode() {
 //        int result = super.hashCode();
 //        result = 31 * result + (getCustomer() != null ? getCustomer().hashCode() : 0);
-//        result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
-//        result = 31 * result + (billToAddress != null ? billToAddress.hashCode() : 0);
+//        result = 31 * result + (getShippingAddress() != null ? getShippingAddress().hashCode() : 0);
+//        result = 31 * result + (getBillToAddress() != null ? getBillToAddress().hashCode() : 0);
+//        result = 31 * result + (getOrderStatus() != null ? getOrderStatus().hashCode() : 0);
 //        return result;
 //    }
 
@@ -177,9 +218,10 @@ public class OrderHeader extends BaseEntity {
             return false;
         if (getBillToAddress() != null ? !getBillToAddress().equals(that.getBillToAddress()) : that.getBillToAddress() != null)
             return false;
-        return getOrderStatus() == that.getOrderStatus();
+        if (getOrderStatus() != that.getOrderStatus()) return false;
+        return getOrderLines() != null ? getOrderLines().equals(that.getOrderLines()) : that.getOrderLines() == null;
     }
-
+    
     @Override
     public int hashCode() {
         int result = super.hashCode();
@@ -187,6 +229,8 @@ public class OrderHeader extends BaseEntity {
         result = 31 * result + (getShippingAddress() != null ? getShippingAddress().hashCode() : 0);
         result = 31 * result + (getBillToAddress() != null ? getBillToAddress().hashCode() : 0);
         result = 31 * result + (getOrderStatus() != null ? getOrderStatus().hashCode() : 0);
+        result = 31 * result + (getOrderLines() != null ? getOrderLines().hashCode() : 0);
         return result;
     }
+
 }
