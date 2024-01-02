@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,6 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
 import com.olteanuflorin86.sdjpaintro.domain.OrderLine;
+import com.olteanuflorin86.sdjpaintro.domain.Product;
+import com.olteanuflorin86.sdjpaintro.domain.ProductStatus;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -21,6 +24,19 @@ public class OrderHeaderRepositoryTest {
 
 	@Autowired
     OrderHeaderRepository orderHeaderRepository;
+	
+    @Autowired
+    ProductRepository productRepository;
+
+    Product product;
+
+    @BeforeEach
+    void setUp() {
+        Product newProduct = new Product();
+        newProduct.setProductStatus(ProductStatus.NEW);
+        newProduct.setDescription("test product");
+        product = productRepository.saveAndFlush(newProduct);
+    }
 
     @Test
     void testSaveOrder() {
@@ -46,6 +62,7 @@ public class OrderHeaderRepositoryTest {
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
+        orderLine.setProduct(product);
 
         orderHeader.setOrderLines(Set.of(orderLine));
         orderLine.setOrderHeader(orderHeader);
