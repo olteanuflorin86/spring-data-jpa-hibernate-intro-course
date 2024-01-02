@@ -1,6 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
-import java.util.Set;
+import java.util.Set; 
+import java.util.HashSet; 
 
 import jakarta.persistence.AttributeOverride; 
 import jakarta.persistence.AttributeOverrides;
@@ -77,6 +78,15 @@ public class OrderHeader extends BaseEntity {
 	
 	@OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
 	private Set<OrderLine> orderLines;
+	
+    public void addOrderLine(OrderLine orderLine) {
+        if (orderLines == null) {
+            orderLines = new HashSet<>();
+        }
+
+        orderLines.add(orderLine);
+        orderLine.setOrderHeader(this);
+    }
 
 	public String getCustomer() {
 		return customer;
