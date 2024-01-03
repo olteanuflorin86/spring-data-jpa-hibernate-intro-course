@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals; 
+import static org.junit.jupiter.api.Assertions.assertEquals;  
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Set;
@@ -17,6 +17,7 @@ import com.olteanuflorin86.sdjpaintro.domain.OrderLine;
 import com.olteanuflorin86.sdjpaintro.domain.Product;
 import com.olteanuflorin86.sdjpaintro.domain.ProductStatus;
 import com.olteanuflorin86.sdjpaintro.domain.Customer;
+import com.olteanuflorin86.sdjpaintro.domain.OrderApproval;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -31,6 +32,9 @@ public class OrderHeaderRepositoryTest {
     
     @Autowired
     CustomerRepository customerRepository;
+    
+    @Autowired
+    OrderApprovalRepository orderApprovalRepository;
 
     Product product;
 
@@ -82,6 +86,12 @@ public class OrderHeaderRepositoryTest {
 //        orderHeader.setOrderLines(Set.of(orderLine));
 //        orderLine.setOrderHeader(orderHeader);
         orderHeader.addOrderLine(orderLine);
+        
+        
+        OrderApproval approval = new OrderApproval();
+        approval.setApprovedBy("me");
+        OrderApproval savedApproval = orderApprovalRepository.save(approval);
+        orderHeader.setOrderApproval(savedApproval);
         
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
         

@@ -11,6 +11,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 //import jakarta.persistence.GeneratedValue;
@@ -82,7 +83,18 @@ public class OrderHeader extends BaseEntity {
 	@OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
 	private Set<OrderLine> orderLines;
 	
-    public void addOrderLine(OrderLine orderLine) {
+	@OneToOne
+	private OrderApproval orderApproval;
+	
+    public OrderApproval getOrderApproval() {
+		return orderApproval;
+	}
+
+	public void setOrderApproval(OrderApproval orderApproval) {
+		this.orderApproval = orderApproval;
+	}
+
+	public void addOrderLine(OrderLine orderLine) {
         if (orderLines == null) {
             orderLines = new HashSet<>();
         }
