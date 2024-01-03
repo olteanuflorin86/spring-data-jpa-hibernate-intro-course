@@ -9,6 +9,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -53,19 +54,21 @@ import jakarta.persistence.Embedded;
 })
 public class OrderHeader extends BaseEntity {
 	
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private Long id;
+////	@Id
+////	@GeneratedValue(strategy = GenerationType.IDENTITY)
+////	private Long id;
 	
-	private String customer;
+//	private String customer;
+	@ManyToOne
+	private Customer customer;
 
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
+////	public Long getId() {
+////		return id;
+////	}
+////
+////	public void setId(Long id) {
+////		this.id = id;
+////	}
 	
 	@Embedded
 	private Address shippingAddress;
@@ -88,11 +91,19 @@ public class OrderHeader extends BaseEntity {
         orderLine.setOrderHeader(this);
     }
 
-	public String getCustomer() {
+//	public String getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(String customer) {
+//		this.customer = customer;
+//	}
+	
+	public Customer getCustomer() {
 		return customer;
 	}
-
-	public void setCustomer(String customer) {
+	
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 	

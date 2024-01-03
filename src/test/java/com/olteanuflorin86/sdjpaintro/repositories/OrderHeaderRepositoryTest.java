@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals; 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Set;
@@ -16,6 +16,7 @@ import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
 import com.olteanuflorin86.sdjpaintro.domain.OrderLine;
 import com.olteanuflorin86.sdjpaintro.domain.Product;
 import com.olteanuflorin86.sdjpaintro.domain.ProductStatus;
+import com.olteanuflorin86.sdjpaintro.domain.Customer;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -27,6 +28,9 @@ public class OrderHeaderRepositoryTest {
 	
     @Autowired
     ProductRepository productRepository;
+    
+    @Autowired
+    CustomerRepository customerRepository;
 
     Product product;
 
@@ -41,7 +45,13 @@ public class OrderHeaderRepositoryTest {
     @Test
     void testSaveOrder() {
         OrderHeader orderHeader = new OrderHeader();
-        orderHeader.setCustomer("New Customer");
+//        orderHeader.setCustomer("New Customer");
+        Customer customer = new Customer();
+        customer.setCustomerName("New Customer");
+        Customer savedCustomer = customerRepository.save(customer);
+
+        orderHeader.setCustomer(savedCustomer);
+        
         OrderHeader savedOrder = orderHeaderRepository.save(orderHeader);
 
         assertNotNull(savedOrder);
@@ -58,7 +68,12 @@ public class OrderHeaderRepositoryTest {
     @Test
     void testSaveOrderWithLine() {
         OrderHeader orderHeader = new OrderHeader();
-        orderHeader.setCustomer("New Customer");
+//      orderHeader.setCustomer("New Customer");
+        Customer customer = new Customer();
+	    customer.setCustomerName("New Customer");
+	    Customer savedCustomer = customerRepository.save(customer);
+	
+	    orderHeader.setCustomer(savedCustomer);
 
         OrderLine orderLine = new OrderLine();
         orderLine.setQuantityOrdered(5);
