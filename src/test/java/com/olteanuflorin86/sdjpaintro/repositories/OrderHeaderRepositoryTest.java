@@ -141,6 +141,7 @@ public class OrderHeaderRepositoryTest {
         assertThrows(EntityNotFoundException.class, () -> {
             OrderHeader fetchedOrder = orderHeaderRepository.getById(savedOrder.getId());
 
+            System.out.println(fetchedOrder);
             assertNull(fetchedOrder);
         });
     }
