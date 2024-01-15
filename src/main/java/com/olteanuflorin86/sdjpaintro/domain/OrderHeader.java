@@ -82,7 +82,7 @@ public class OrderHeader extends BaseEntity {
 	
 //	@OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
 	@OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private Set<OrderLine> orderLines = new HashSet<>();
+	private Set<OrderLine> orderLines;
 	
 //////	@OneToOne
 ////	@OneToOne(cascade = CascadeType.PERSIST)
