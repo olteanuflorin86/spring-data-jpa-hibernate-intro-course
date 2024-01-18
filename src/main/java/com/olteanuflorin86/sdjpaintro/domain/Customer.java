@@ -3,6 +3,7 @@ package com.olteanuflorin86.sdjpaintro.domain;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Version;
 
 import java.util.Set;
 import java.util.LinkedHashSet;
@@ -20,8 +21,11 @@ public class Customer extends BaseEntity {
 
     @OneToMany(mappedBy = "customer")
     private Set<OrderHeader> orders = new LinkedHashSet<>();
+    
+    @Version
+    private Integer version;
 
-    public String getCustomerName() {
+	public String getCustomerName() {
         return customerName;
     }
 
@@ -60,5 +64,13 @@ public class Customer extends BaseEntity {
     public void setOrders(Set<OrderHeader> orders) {
         this.orders = orders;
     }
+    
+    public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
     
 }

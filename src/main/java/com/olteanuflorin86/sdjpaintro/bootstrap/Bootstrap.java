@@ -1,18 +1,23 @@
 package com.olteanuflorin86.sdjpaintro.bootstrap;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.olteanuflorin86.sdjpaintro.repositories.OrderHeaderRepository;
+import com.olteanuflorin86.sdjpaintro.repositories.CustomerRepository;
 import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
+import com.olteanuflorin86.sdjpaintro.domain.Customer;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
 	
 	@Autowired
 	BootstrapOrderService bootstrapOrderService;
+	
+	@Autowired
+	CustomerRepository customerRepository;
 
 //	@Autowired
 //	OrderHeaderRepository orderHeaderRepository;
@@ -36,6 +41,14 @@ public class Bootstrap implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 //		readOrderData();
 		bootstrapOrderService.readOrderData();
+		
+        Customer customer = new Customer();
+        customer.setCustomerName("Testing Version");
+        Customer savedCustomer = customerRepository.save(customer);
+
+        System.out.println("Version is: " + savedCustomer.getVersion());
+
+        customerRepository.deleteById(savedCustomer.getId());
 	}
 
 }
