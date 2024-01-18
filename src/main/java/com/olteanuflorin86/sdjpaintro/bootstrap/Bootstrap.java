@@ -10,28 +10,32 @@ import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
-
-	@Autowired
-	OrderHeaderRepository orderHeaderRepository;
 	
-	@Transactional
-	void readOrderData() {
-//		System.out.println("I was called!");
-		OrderHeader orderHeader = orderHeaderRepository.findById(1L).get();
-		
-		orderHeader.getOrderLines().forEach(ol -> {
-			System.out.println(ol.getProduct().getDescription());
-			
-			ol.getProduct().getCategories().forEach(cat -> {
-				System.out.println(cat.getDescription());
-			});
-		});		
-	}
+	@Autowired
+	BootstrapOrderService bootstrapOrderService;
+
+//	@Autowired
+//	OrderHeaderRepository orderHeaderRepository;
+//
+//	@Transactional
+//	void readOrderData() {
+////		System.out.println("I was called!");
+//		OrderHeader orderHeader = orderHeaderRepository.findById(1L).get();
+//		
+//		orderHeader.getOrderLines().forEach(ol -> {
+//			System.out.println(ol.getProduct().getDescription());
+//			
+//			ol.getProduct().getCategories().forEach(cat -> {
+//				System.out.println(cat.getDescription());
+//			});
+//		});		
+//	}
 	
 //	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
-		readOrderData();
+//		readOrderData();
+		bootstrapOrderService.readOrderData();
 	}
 
 }
