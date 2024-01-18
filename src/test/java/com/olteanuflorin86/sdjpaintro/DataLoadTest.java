@@ -84,6 +84,31 @@ public class DataLoadTest {
     	System.out.println("Total ordered: " + totalOrdered.getSum());
     }
     
+    
+    
+    /* 
+      Code for Workbench:
+      	SELECT * FROM orderservice.order_header;
+		SELECT * FROM orderservice.order_header WHERE id = 1 FOR UPDATE;
+    */
+    
+    //@Disabled
+    @Test
+    void testDBLock() {
+        Long id = 1l;
+
+        OrderHeader orderHeader = orderHeaderRepository.findById(id).get();
+
+        Address billTo = new Address();
+        billTo.setAddress("Bill me");
+        orderHeader.setBillToAddress(billTo);
+        orderHeaderRepository.saveAndFlush(orderHeader);
+
+        System.out.println("I updated the order");
+    }
+    
+    
+    
     private OrderHeader saveOrder(Customer customer, List<Product> products){
         Random random = new Random();
 
