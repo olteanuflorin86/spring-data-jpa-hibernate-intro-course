@@ -2,7 +2,9 @@ package com.olteanuflorin86.sdjpaintro;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.IntSummaryStatistics;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -51,7 +53,7 @@ public class DataLoadTest {
         List<Product> products = loadProducts();
         Customer customer = loadCustomers();
 
-        int ordersToCreate = 10;
+        int ordersToCreate = 100;
 
         for (int i = 0; i < ordersToCreate; i++){
             System.out.println("Creating order #: " + i);
@@ -61,6 +63,7 @@ public class DataLoadTest {
         orderHeaderRepository.flush();
 	}
     
+    @Disabled
     @Test
     void testLazyVsEager() {
     	OrderHeader orderHeader = orderHeaderRepository.getById(5l);
@@ -69,6 +72,18 @@ public class DataLoadTest {
     	System.out.println("Customer Name is: " + orderHeader.getCustomer().getCustomerName());
     }
 	
+//    @Disabled
+    @Test
+    void testN_PlusOneProblem() {
+    	Customer customer = customerRepository.findCustomerByCustomerNameIgnoreCase(TEST_CUSTOMER).get();
+    	
+    	IntSummaryStatistics totalOrdered = orderHeaderRepository.findAllByCustomer(customer).stream()
+    		.flatMap(orderHeader -> orderHeader.getOrderLines().stream())
+    				.collect(Collectors.summarizingInt(ol -> ol.getQuantityOrdered()));
+    	
+    	System.out.println("Total ordered: " + totalOrdered.getSum());
+    }
+    
     private OrderHeader saveOrder(Customer customer, List<Product> products){
         Random random = new Random();
 

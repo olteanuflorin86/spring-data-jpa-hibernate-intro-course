@@ -1,6 +1,10 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
-import java.util.Set; 
+import java.util.Set;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.HashSet; 
 
 import jakarta.persistence.AttributeOverride; 
@@ -81,14 +85,18 @@ public class OrderHeader extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 	
-//	@OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
-	@OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+////	@OneToMany(mappedBy = "orderHeader", cascade = CascadeType.PERSIST)
+//	@OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "orderHeader", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
 	private Set<OrderLine> orderLines;
 	
-//////	@OneToOne
-////	@OneToOne(cascade = CascadeType.PERSIST)
-//	@OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderHeader")
+////////	@OneToOne
+//////	@OneToOne(cascade = CascadeType.PERSIST)
+////	@OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
+//	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "orderHeader")
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@Fetch(FetchMode.SELECT)
 	private OrderApproval orderApproval;
 	
     public OrderApproval getOrderApproval() {
