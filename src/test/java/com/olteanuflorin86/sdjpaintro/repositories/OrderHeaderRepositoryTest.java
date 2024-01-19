@@ -1,6 +1,6 @@
 package com.olteanuflorin86.sdjpaintro.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;   
+import static org.junit.jupiter.api.Assertions.assertEquals;    
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,6 +22,7 @@ import com.olteanuflorin86.sdjpaintro.domain.Product;
 import com.olteanuflorin86.sdjpaintro.domain.ProductStatus;
 import com.olteanuflorin86.sdjpaintro.domain.Customer;
 import com.olteanuflorin86.sdjpaintro.domain.OrderApproval;
+import com.olteanuflorin86.sdjpaintro.domain.Address;
 
 @ActiveProfiles("local")
 @DataJpaTest
@@ -57,6 +58,11 @@ public class OrderHeaderRepositoryTest {
         Customer customer = new Customer();
         customer.setCustomerName("New Customer");
         Customer savedCustomer = customerRepository.save(customer);
+        
+        customer.setPhone("0123456789");
+        Address address = new Address();
+        address.setCity("012345678");
+        customer.setAddress(address);
 
         orderHeader.setCustomer(savedCustomer);
         

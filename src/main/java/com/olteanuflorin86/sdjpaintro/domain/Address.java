@@ -1,12 +1,17 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Address {
 	
 	private String address; 
+	
+	@Length(max = 30)
 	private String city; 
+	
 	private String state; 
 	private String zipCode;
 	

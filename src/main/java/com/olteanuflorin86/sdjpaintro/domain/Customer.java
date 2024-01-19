@@ -4,19 +4,27 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
+import jakarta.validation.Valid;
 
 import java.util.Set;
+
+import org.hibernate.validator.constraints.Length;
+
 import java.util.LinkedHashSet;
 
 @Entity
 public class Customer extends BaseEntity {
 
+	@Length(max = 50)
 	private String customerName;
 
+	@Valid
     @Embedded
     private Address address;
 
+	@Length(max = 20)
     private String phone;
+    
     private String email;
 
     @OneToMany(mappedBy = "customer")

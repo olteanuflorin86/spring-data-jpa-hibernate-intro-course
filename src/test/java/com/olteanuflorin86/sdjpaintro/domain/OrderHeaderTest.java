@@ -1,8 +1,10 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse; 
 
 import org.junit.jupiter.api.Test;
+
+import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
 
 public class OrderHeaderTest {
 
