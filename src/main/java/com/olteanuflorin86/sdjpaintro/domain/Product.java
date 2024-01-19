@@ -22,7 +22,9 @@ public class Product extends BaseEntity {
 			joinColumns = @JoinColumn(name = "product_id"), 
 			inverseJoinColumns = @JoinColumn(name= "category_id"))
 	private Set<Category> categories;
-
+	
+	private Integer quantityOnHand = 0;
+	
 	public String getDescription() {
 		return description;
 	}
@@ -47,6 +49,14 @@ public class Product extends BaseEntity {
 		this.categories = categories;
 	}
 
+	public Integer getQuantityOnHand() {
+		return quantityOnHand;
+	}
+
+	public void setQuantityOnHand(Integer quantityOnHand) {
+		this.quantityOnHand = quantityOnHand;
+	}
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
