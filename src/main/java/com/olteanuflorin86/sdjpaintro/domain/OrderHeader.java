@@ -17,6 +17,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Version;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 //import jakarta.persistence.GeneratedValue;
@@ -99,6 +100,9 @@ public class OrderHeader extends BaseEntity {
 	@Fetch(FetchMode.SELECT)
 	private OrderApproval orderApproval;
 	
+	@Version
+	private Integer version;
+	
     public OrderApproval getOrderApproval() {
 		return orderApproval;
 	}
@@ -164,6 +168,14 @@ public class OrderHeader extends BaseEntity {
     public void setOrderLines(Set<OrderLine> orderLines) {
         this.orderLines = orderLines;
     }
+    
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 ////////    @Override
 ////////    public boolean equals(Object o) {
