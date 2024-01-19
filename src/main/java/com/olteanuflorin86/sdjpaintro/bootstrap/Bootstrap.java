@@ -1,14 +1,17 @@
 package com.olteanuflorin86.sdjpaintro.bootstrap;
 
-import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Autowired;   
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.olteanuflorin86.sdjpaintro.repositories.OrderHeaderRepository;
+import com.olteanuflorin86.sdjpaintro.services.ProductService;
 import com.olteanuflorin86.sdjpaintro.repositories.CustomerRepository;
 import com.olteanuflorin86.sdjpaintro.domain.OrderHeader;
 import com.olteanuflorin86.sdjpaintro.domain.Customer;
+import com.olteanuflorin86.sdjpaintro.domain.Product;
+import com.olteanuflorin86.sdjpaintro.domain.ProductStatus;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -36,9 +39,28 @@ public class Bootstrap implements CommandLineRunner {
 //		});		
 //	}
 	
+	
+    @Autowired
+    ProductService productService;
+    
+    private void updateProduct(){
+        Product product = new Product();
+        product.setDescription("My Product");
+        product.setProductStatus(ProductStatus.NEW);
+
+        Product savedProduct = productService.saveProduct(product);
+
+        Product savedProduct2 = productService.updateQOH(savedProduct.getId(), 25);
+
+        System.out.println("Updated Qty: " + savedProduct2.getQuantityOnHand());
+    }
+	
 //	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
+		
+		updateProduct();
+		
 //		readOrderData();
 		bootstrapOrderService.readOrderData();
 		
