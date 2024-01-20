@@ -1,6 +1,7 @@
 package com.olteanuflorin86.sdjpaintro.domain;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -11,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -81,6 +84,10 @@ public class User {
 //	@Column(name = "display_name", nullable = false)
 	@Basic(optional = false )
 	private String displayName;
+	
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<UserMeta> userMetaSet;
 
 	public Long getId() {
 		return id;
@@ -161,5 +168,13 @@ public class User {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
+    public Set<UserMeta> getUserMetaSet() {
+        return userMetaSet;
+    }
+
+    public void setUserMetaSet(Set<UserMeta> userMetaSet) {
+        this.userMetaSet = userMetaSet;
+    }
 
 }
