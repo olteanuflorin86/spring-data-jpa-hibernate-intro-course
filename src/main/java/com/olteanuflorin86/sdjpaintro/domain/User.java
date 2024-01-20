@@ -2,6 +2,7 @@ package com.olteanuflorin86.sdjpaintro.domain;
 
 import java.sql.Timestamp;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +42,9 @@ public class User {
 	@Column(name = "user_status")
 	private Integer status;
 	
-	@Column(name = "display_name")
+//	@Column(name = "display_name")
+//	@Column(name = "display_name", nullable = false)
+	@Basic(optional = false )
 	private String displayName;
 
 	public Long getId() {
