@@ -2,6 +2,8 @@ package com.olteanuflorin86.sdjpaintro.domain;
 
 import java.sql.Timestamp;
 
+import org.hibernate.validator.constraints.URL;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "wp_users")
@@ -18,30 +23,48 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
+	@Size(max = 60)
 	@Column(name = "user_login")
 	private String login;
 	
+	@NotNull
+	@Size(max = 255)
 	@Column(name = "user_pass")
 	private String password;
 	
+	@NotNull
+	@Size(max = 50)
 	@Column(name = "user_nicename")
 	private String nicename;
 	
+	@Email
+	@NotNull
+	@Size(max = 100)
 	@Column(name = "user_email")
 	private String email;
 	
+	@URL
+	@NotNull
+	@Size(max = 100)
 	@Column(name = "user_url")
 	private String url;
 	
+	@NotNull
     @Column(name = "user_registered")
     private Timestamp registered;
 	
+	@NotNull
+	@Size(max = 255)
 	@Column(name = "user_activation_key")
 	private String activationKey;
 	
+	@NotNull
 	@Column(name = "user_status")
 	private Integer status;
 	
+	@NotNull
+	@Size(max = 250)
 //	@Column(name = "display_name")
 //	@Column(name = "display_name", nullable = false)
 	@Basic(optional = false )
