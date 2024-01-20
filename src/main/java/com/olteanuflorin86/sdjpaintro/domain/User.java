@@ -10,13 +10,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "wp_users")
+//@Table(name = "wp_users")
+@Table(name = "wp_users", indexes = {
+		@Index(name = "user_login_key", columnList = "user_login"),
+		@Index(name = "user_nicename", columnList = "user_nicename"),
+        @Index(name = "user_email", columnList = "user_email")
+})
 public class User {
 	
 	@Id
