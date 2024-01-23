@@ -18,52 +18,43 @@ import com.olteanuflorin86.sdjpaintro.services.EncryptionService;
 @Component
 public class EncryptionInterceptor extends EmptyInterceptor {
 
-	private final EncryptionService encryptionService;
-	
-	public EncryptionInterceptor(EncryptionService encryptionService) {
-		this.encryptionService = encryptionService;
-	}
-	
-	@Override
-	public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types)
-			throws CallbackException {
+    private final EncryptionService encryptionService;
 
-		System.out.println("I'm in onLoad");
-		
-        Object[] newState = processFields(entity, state, propertyNames, "onLoad");
+    public EncryptionInterceptor(EncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
 
-//        return super.onLoad(entity, id, state, propertyNames, types);
-        return super.onLoad(entity, id, newState, propertyNames, types);
-	}
+    @Override
+    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
 
-	@Override
-	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
-			String[] propertyNames, Type[] types) throws CallbackException {
+        System.out.println("I'm in onFlushDirty");
 
-		System.out.println("I'm in onFlushDirty");
-		
         Object[] newState = processFields(entity, currentState, propertyNames, "onFlushDirty");
 
-//        return super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
         return super.onFlushDirty(entity, id, newState, previousState, propertyNames, types);
-	}
+    }
 
-	@Override
-	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types)
-			throws CallbackException {
-		
-		System.out.println("I'm in onSave");
+    @Override
+    public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        System.out.println("I'm in onLoad");
+               
+        Object[] newState = processFields(entity, state, propertyNames, "onLoad");
 
+        return super.onLoad(entity, id, newState, propertyNames, types);
+    }
+
+    @Override
+    public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        System.out.println("I'm in onSave");
+        
         Object[] newState = processFields(entity, state, propertyNames, "onSave");
 
-//        return super.onSave(entity, id, state, propertyNames, types);
         return super.onSave(entity, id, newState, propertyNames, types);
-	}
-	
-	
+    }
+
     private Object[] processFields(Object entity, Object[] state, String[] propertyNames, String type) {
         List<String> annotationFields = getAnnotationFields(entity);
-
+        
         for (String field : annotationFields) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if (propertyNames[i].equals(field)) {
@@ -77,25 +68,20 @@ public class EncryptionInterceptor extends EmptyInterceptor {
                 }
             }
         }
- 
+
         return state;
     }
 
-	private List<String> getAnnotationFields(Object entity) {
-		
-		List<String> annotatedFields = new ArrayList<>();
-		
-		for(Field field : entity.getClass().getDeclaredFields()) {
-			if(Objects.isNull(field.getAnnotation(EncryptedString.class))) {
-				annotatedFields.add(field.getName());
-			}
-		}
-		
-		return annotatedFields;
-	}
-	
+    private List<String> getAnnotationFields(Object entity) {
+
+        List<String> annotatedFields = new ArrayList<>();
+
+        for (Field field : entity.getClass().getDeclaredFields()) {
+            if (!Objects.isNull(field.getAnnotation(EncryptedString.class))) {
+                annotatedFields.add(field.getName());
+            }
+        }
+
+        return annotatedFields;
+    }
 }
-
-
-
-
