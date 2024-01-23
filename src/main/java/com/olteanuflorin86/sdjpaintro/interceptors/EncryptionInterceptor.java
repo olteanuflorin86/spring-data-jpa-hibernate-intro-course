@@ -15,7 +15,7 @@ import java.util.Objects;
 
 import com.olteanuflorin86.sdjpaintro.services.EncryptionService;
 
-@Component
+//@Component
 public class EncryptionInterceptor extends EmptyInterceptor {
 
     private final EncryptionService encryptionService;
