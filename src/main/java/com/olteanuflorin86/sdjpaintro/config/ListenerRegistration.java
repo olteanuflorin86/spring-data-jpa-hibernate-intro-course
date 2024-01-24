@@ -12,7 +12,7 @@ import com.olteanuflorin86.sdjpaintro.listeners.PostLoadListener;
 import com.olteanuflorin86.sdjpaintro.listeners.PreInsertListener;
 import com.olteanuflorin86.sdjpaintro.listeners.PreUpdateListener;
 
-@Component
+//@Component
 public class ListenerRegistration implements BeanPostProcessor {
 
     private final PostLoadListener postLoadListener;
@@ -36,16 +36,16 @@ public class ListenerRegistration implements BeanPostProcessor {
 //		// TODO Auto-generated method stub
 //		return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
 		
-        if (bean instanceof LocalContainerEntityManagerFactoryBean){
-            LocalContainerEntityManagerFactoryBean lemf = (LocalContainerEntityManagerFactoryBean) bean;
-            SessionFactoryImpl sessionFactory = (SessionFactoryImpl) lemf.getNativeEntityManagerFactory();
-            EventListenerRegistry registry = sessionFactory.getServiceRegistry()
-                    .getService(EventListenerRegistry.class);
- 
-            registry.appendListeners(EventType.POST_LOAD, postLoadListener);
-            registry.appendListeners(EventType.PRE_INSERT, preInsertListener);
-            registry.appendListeners(EventType.PRE_UPDATE, preUpdateListener);
-        }
+//        if (bean instanceof LocalContainerEntityManagerFactoryBean){
+//            LocalContainerEntityManagerFactoryBean lemf = (LocalContainerEntityManagerFactoryBean) bean;
+//            SessionFactoryImpl sessionFactory = (SessionFactoryImpl) lemf.getNativeEntityManagerFactory();
+//            EventListenerRegistry registry = sessionFactory.getServiceRegistry()
+//                    .getService(EventListenerRegistry.class);
+// 
+//            registry.appendListeners(EventType.POST_LOAD, postLoadListener);
+//            registry.appendListeners(EventType.PRE_INSERT, preInsertListener);
+//            registry.appendListeners(EventType.PRE_UPDATE, preUpdateListener);
+//        }
 
         return bean;
 	}
