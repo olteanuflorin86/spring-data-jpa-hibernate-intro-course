@@ -9,6 +9,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -16,6 +17,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.olteanuflorin86.sdjpaintro.domain.pan.CreditCardPAN;
 import com.zaxxer.hikari.HikariDataSource;
 
+@EnableJpaRepositories(basePackages = "com.olteanuflorin86.sdjpaintro.repositories.pan",
+entityManagerFactoryRef = "panEntityManagerFactory", transactionManagerRef = "panTransactionManager")
 @Configuration
 public class PanDatabaseConfiguration {
 
