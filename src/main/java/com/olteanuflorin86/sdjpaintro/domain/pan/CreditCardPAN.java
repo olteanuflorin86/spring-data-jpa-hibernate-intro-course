@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import com.olteanuflorin86.sdjpaintro.domain.CreditCardConverter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "credit_card_pan")
 public class CreditCardPAN {
 
     @Id
