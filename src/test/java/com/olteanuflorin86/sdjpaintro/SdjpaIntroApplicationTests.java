@@ -31,6 +31,12 @@ class SdjpaIntroApplicationTests {
         assertThat(savedCC).isNotNull();
         assertThat(savedCC.getId()).isNotNull();
         assertThat(savedCC.getCreditCardNumber()).isNotNull();
+        
+        CreditCard fetchedCreditCard = creditCardService.getCreditCardById(savedCC.getId());
+
+        assertThat(fetchedCreditCard).isNotNull();
+        assertThat(fetchedCreditCard.getId()).isNotNull();
+        assertThat(fetchedCreditCard.getCreditCardNumber()).isNotNull();
 	}
 	
 	@Test
