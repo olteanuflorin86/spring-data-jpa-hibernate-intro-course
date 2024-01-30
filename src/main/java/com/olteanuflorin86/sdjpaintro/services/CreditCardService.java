@@ -5,4 +5,6 @@ import com.olteanuflorin86.sdjpaintro.domain.creditcard.CreditCard;
 public interface CreditCardService {
 
 	CreditCard getCreditCardById(Long id);
+	
+	CreditCard saveCreditCard(CreditCard cc);
 }
